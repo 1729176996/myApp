@@ -11,27 +11,27 @@
 	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/data.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<!-- 主界面不动、菜单移动 -->
 	<!-- 侧滑导航根容器 -->
 	<div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
-	  <!-- 菜单容器 -->
-	  <aside class="mui-off-canvas-left" id="offCanvasSide">
+		<!-- 菜单容器 -->
+		<aside class="mui-off-canvas-left" id="offCanvasSide">
 		<div class="mui-scroll-wrapper" id="offvm">
-		  <div class="mui-scroll">
-			<!-- 菜单具体展示内容 -->
-			<ul class="mui-table-view">
+			<div class="mui-scroll">
+				<!-- 菜单具体展示内容 -->
+				<ul class="mui-table-view">
 					<li v-for="item in list" class="mui-table-view-cell" @click="clickItem(item)">
 						<a class="mui-navigate-right">
 							{{item.name}}
 						</a>
 					</li>
 				</ul>
-		  </div>
-		</div>
-	  </aside>
+			</div>
+		</aside>
 	  <!-- 主页面容器 -->
 	  <div class="mui-inner-wrap">
 		<div id="main">
@@ -40,6 +40,15 @@
 			  <h1 class="mui-title">首页</h1>
 			</header>
 			<div class="mui-content">
+				<span v-for="item in types" class="mui-badge" :class="item.code==type?'mui-badge-primary':''" @click="selectType(item)">{{item.name}}</span>
+				<button type="button" class="mui-btn mui-btn-green mui-btn-block">按钮</button>
+				<ul class="mui-table-view">
+					<li v-for="item in list" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							{{item.name}}
+						</a>
+					</li>
+				</ul>
 				
 			</div>
 		</div>

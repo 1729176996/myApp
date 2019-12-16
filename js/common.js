@@ -11,10 +11,7 @@ $(function(){
 			list:[]
 	    },
 	    mounted:function(){
-	        var list = [
-				{name:'11'},
-				{name:'22'}
-			];
+	        var list = new Array(30).fill({name:'11'});
 			this.list = list;
 			this.$nextTick(function(){
 				mui('.mui-scroll-wrapper').scroll({
