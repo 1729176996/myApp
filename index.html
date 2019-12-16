@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>首页</title>
+	<link href="css/mui.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <script src="js/mui.min.js"></script>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<!-- 主界面不动、菜单移动 -->
+	<!-- 侧滑导航根容器 -->
+	<div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+	  <!-- 菜单容器 -->
+	  <aside class="mui-off-canvas-left" id="offCanvasSide">
+		<div class="mui-scroll-wrapper" id="offvm">
+		  <div class="mui-scroll">
+			<!-- 菜单具体展示内容 -->
+			<ul class="mui-table-view">
+					<li v-for="item in list" class="mui-table-view-cell" @click="clickItem(item)">
+						<a class="mui-navigate-right">
+							{{item.name}}
+						</a>
+					</li>
+				</ul>
+		  </div>
+		</div>
+	  </aside>
+	  <!-- 主页面容器 -->
+	  <div class="mui-inner-wrap">
+		<div id="main">
+			<header class="mui-bar mui-bar-nav">
+			  <a class="mui-icon mui-action-menu mui-icon-bars mui-pull-left" href="#offCanvasSide"></a>
+			  <h1 class="mui-title">首页</h1>
+			</header>
+			<div class="mui-content">
+				
+			</div>
+		</div>
+		<div class="mui-off-canvas-backdrop"></div>
+	  </div>
+	</div>
+</body>
+</html>
