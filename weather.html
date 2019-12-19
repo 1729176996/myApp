@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>天气</title>
+	<link href="css/mui.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <script src="js/mui.min.js"></script>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/data.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/weather.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<!-- 主界面不动、菜单移动 -->
+	<!-- 侧滑导航根容器 -->
+	<div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+		<!-- 菜单容器 -->
+		<aside class="mui-off-canvas-left" id="offCanvasSide">
+			<div class="mui-scroll-wrapper" id="offvm">
+				<div class="mui-scroll">
+					<!-- 菜单具体展示内容 -->
+					<ul class="mui-table-view">
+						<li v-for="item in list" class="mui-table-view-cell" @click="clickItem(item)">
+							<a class="mui-navigate-right">
+								{{item.name}}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</aside>
+	  <!-- 主页面容器 -->
+	  <div class="mui-inner-wrap">
+		<div id="main">
+			<header class="mui-bar mui-bar-nav">
+			  <a class="mui-icon mui-action-menu mui-icon-bars mui-pull-left" href="#offCanvasSide"></a>
+			  <h1 class="mui-title">天气</h1>
+			</header>
+			<div class="mui-content flex">
+				<div class="mui-scroll-wrapper" id="weatherwrapper">
+					<div class="mui-scroll">
+						<!--这里放置真实显示的DOM内容-->
+						
+						<div>
+							<!-- 基础信息 -->
+							<div>地区／城市名称:<span class="c-blue">{{basic.location}}</span></div>
+							<div>地区／城市ID:<span class="c-blue">{{basic.cid}}</span></div>
+							<div>地区／城市纬度:<span class="c-blue">{{basic.lat}}</span></div>
+							<div>地区／城市经度:<span class="c-blue">{{basic.lon}}</span></div>
+							<div>该地区／城市的上级城市:<span class="c-blue">{{basic.parent_city}}</span></div>
+							<div>该地区／城市所属行政区域:<span class="c-blue">{{basic.admin_area}}</span></div>
+							<div>该地区／城市所属国家名称:<span class="c-blue">{{basic.cnty}}</span></div>
+							<div>该地区／城市所在时区:<span class="c-blue">{{basic.tz}}</span></div>
+						</div>
+						<div v-if="tab=='now'">
+							<!-- 实况天气 -->
+							<div>体感温度:<span class="c-blue">{{now.fl}}摄氏度</span></div>
+							<div>温度:<span class="c-blue">{{now.tmp}}摄氏度</span></div>
+							<div>实况天气状况:<span class="c-blue">{{now.cond_txt}}</span></div>
+							<div>风向360角度:<span class="c-blue">{{now.wind_deg}}</span></div>
+							<div>风向:<span class="c-blue">{{now.wind_dir}}</span></div>
+							<div>风力:<span class="c-blue">{{now.wind_sc}}</span></div>
+							<div>风速:<span class="c-blue">{{now.wind_spd}}公里/小时</span></div>
+							<div>相对湿度:<span class="c-blue">{{now.hum}}</span></div>
+							<div>降水量:<span class="c-blue">{{now.pcpn}}</span></div>
+							<div>大气压强:<span class="c-blue">{{now.pres}}</span></div>
+							<div>能见度:<span class="c-blue">{{now.vis}}公里</span></div>
+							<div>云量:<span class="c-blue">{{now.cloud}}</span></div>
+						</div>
+						<div v-if="tab=='forecast'">
+							<!-- 3-10天预报 -->
+							
+							<ul class="mui-table-view">
+								<li v-for="item in forecast" class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" href="#">预报日期:<span class="c-blue">{{item.date}}</span></a>
+									<div class="mui-collapse-content">
+										<p>日出时间:<span class="c-blue">{{item.sr}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>日落时间:<span class="c-blue">{{item.ss}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>月升时间:<span class="c-blue">{{item.mr}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>月落时间:<span class="c-blue">{{item.ms}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>最高温度:<span class="c-blue">{{item.tmp_max}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>最低温度:<span class="c-blue">{{item.tmp_min}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>白天天气状况:<span class="c-blue">{{item.cond_txt_d}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>晚间天气状况:<span class="c-blue">{{item.cond_txt_n}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>风向360角度:<span class="c-blue">{{item.wind_deg}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>风向:<span class="c-blue">{{item.wind_dir}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>风力:<span class="c-blue">{{item.wind_sc}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>风速:<span class="c-blue">{{item.wind_spd}}公里/小时</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>相对湿度:<span class="c-blue">{{item.hum}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>降水量:<span class="c-blue">{{item.pcpn}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>降水概率:<span class="c-blue">{{item.pop}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>大气压强:<span class="c-blue">{{item.pres}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>紫外线强度指数:<span class="c-blue">{{item.uv_index}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>能见度:<span class="c-blue">{{item.vis}}公里</span></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div v-if="tab=='hourly'">
+							<!-- 逐小时预报 -->
+							<div>体感温度:<span class="c-blue">{{hourly}}摄氏度</span></div>
+							<div>温度:<span class="c-blue">{{hourly.tmp}}摄氏度</span></div>
+							<div>实况天气状况:<span class="c-blue">{{hourly.cond_txt}}</span></div>
+							<div>风向360角度:<span class="c-blue">{{hourly.wind_deg}}</span></div>
+							<div>风向:<span class="c-blue">{{hourly.wind_dir}}</span></div>
+							<div>风力:<span class="c-blue">{{hourly.wind_sc}}</span></div>
+							<div>风速:<span class="c-blue">{{hourly.wind_spd}}公里/小时</span></div>
+							<div>相对湿度:<span class="c-blue">{{hourly.hum}}</span></div>
+							<div>降水量:<span class="c-blue">{{hourly.pcpn}}</span></div>
+							<div>大气压强:<span class="c-blue">{{hourly.pres}}</span></div>
+							<div>能见度:<span class="c-blue">{{hourly.vis}}公里</span></div>
+							<div>云量:<span class="c-blue">{{hourly.cloud}}</span></div>
+						</div>
+						<div v-if="tab=='lifestyle'">
+							<!-- 生活指数 -->
+							<div>体感温度:<span class="c-blue">{{lifestyle.fl}}摄氏度</span></div>
+							<div>温度:<span class="c-blue">{{lifestyle.tmp}}摄氏度</span></div>
+							<div>实况天气状况:<span class="c-blue">{{lifestyle.cond_txt}}</span></div>
+							<div>风向360角度:<span class="c-blue">{{lifestyle.wind_deg}}</span></div>
+							<div>风向:<span class="c-blue">{{lifestyle.wind_dir}}</span></div>
+							<div>风力:<span class="c-blue">{{lifestyle.wind_sc}}</span></div>
+							<div>风速:<span class="c-blue">{{lifestyle.wind_spd}}公里/小时</span></div>
+							<div>相对湿度:<span class="c-blue">{{lifestyle.hum}}</span></div>
+							<div>降水量:<span class="c-blue">{{lifestyle.pcpn}}</span></div>
+							<div>大气压强:<span class="c-blue">{{lifestyle.pres}}</span></div>
+							<div>能见度:<span class="c-blue">{{lifestyle.vis}}公里</span></div>
+							<div>云量:<span class="c-blue">{{lifestyle.cloud}}</span></div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<nav class="mui-bar mui-bar-tab">
+				<a class="mui-tab-item mui-active" @click="getWeather_now">
+					<span class="mui-icon mui-icon-home"></span>
+					<span class="mui-tab-label">实况天气</span>
+				</a>
+				<a class="mui-tab-item" @click="getWeather_forecast">
+					<span class="mui-icon mui-icon-phone"></span>
+					<span class="mui-tab-label">3-10天预报</span>
+				</a>
+				<a class="mui-tab-item" @click="getWeather_hourly">
+					<span class="mui-icon mui-icon-email"></span>
+					<span class="mui-tab-label">逐小时预报</span>
+				</a>
+				<a class="mui-tab-item" @click="getWeather_lifestyle">
+					<span class="mui-icon mui-icon-gear"></span>
+					<span class="mui-tab-label">生活指数</span>
+				</a>
+			</nav>
+		</div>
+		<div class="mui-off-canvas-backdrop"></div>
+	  </div>
+	</div>
+</body>
+</html>

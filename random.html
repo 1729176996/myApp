@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>首页</title>
+    <title>随机</title>
 	<link href="css/mui.min.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="css/common.css"/>
     <script src="js/mui.min.js"></script>
@@ -12,7 +12,7 @@
     <script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/data.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/random.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<!-- 主界面不动、菜单移动 -->
@@ -38,10 +38,18 @@
 		<div id="main">
 			<header class="mui-bar mui-bar-nav">
 			  <a class="mui-icon mui-action-menu mui-icon-bars mui-pull-left" href="#offCanvasSide"></a>
-			  <h1 class="mui-title">首页</h1>
+			  <h1 class="mui-title">随机</h1>
 			</header>
 			<div class="mui-content flex">
-				<iframe src="https://widget-page.heweather.net/h5/index.html?bg=1&md=0345126&lc=accu&key=f0cd2ab6a5984c948058cae2d0788e57" width="100%" height="100%"></iframe>
+				<span v-for="item in types" class="mui-badge" :class="item.code==type?'mui-badge-primary':''" @click="selectType(item)">{{item.name}}</span>
+				<button type="button" class="mui-btn mui-btn-green mui-btn-block">按钮</button>
+				<ul class="mui-table-view">
+					<li v-for="item in list" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							{{item.name}}
+						</a>
+					</li>
+				</ul>
 				
 			</div>
 		</div>
