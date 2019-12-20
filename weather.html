@@ -13,6 +13,11 @@
 	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/data.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/weather.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css">
+		#weatherwrapper{
+			top: 44px;
+		}
+	</style>
 </head>
 <body>
 	<!-- 主界面不动、菜单移动 -->
@@ -44,7 +49,6 @@
 				<div class="mui-scroll-wrapper" id="weatherwrapper">
 					<div class="mui-scroll">
 						<!--这里放置真实显示的DOM内容-->
-						
 						<div>
 							<!-- 基础信息 -->
 							<div>地区／城市名称:<span class="c-blue">{{basic.location}}</span></div>
@@ -134,36 +138,39 @@
 								</li>
 							</ul>
 						</div>
-						<div v-if="tab=='hourly'">
-							<!-- 逐小时预报 -->
-							<div>体感温度:<span class="c-blue">{{hourly}}摄氏度</span></div>
-							<div>温度:<span class="c-blue">{{hourly.tmp}}摄氏度</span></div>
-							<div>实况天气状况:<span class="c-blue">{{hourly.cond_txt}}</span></div>
-							<div>风向360角度:<span class="c-blue">{{hourly.wind_deg}}</span></div>
-							<div>风向:<span class="c-blue">{{hourly.wind_dir}}</span></div>
-							<div>风力:<span class="c-blue">{{hourly.wind_sc}}</span></div>
-							<div>风速:<span class="c-blue">{{hourly.wind_spd}}公里/小时</span></div>
-							<div>相对湿度:<span class="c-blue">{{hourly.hum}}</span></div>
-							<div>降水量:<span class="c-blue">{{hourly.pcpn}}</span></div>
-							<div>大气压强:<span class="c-blue">{{hourly.pres}}</span></div>
-							<div>能见度:<span class="c-blue">{{hourly.vis}}公里</span></div>
-							<div>云量:<span class="c-blue">{{hourly.cloud}}</span></div>
-						</div>
 						<div v-if="tab=='lifestyle'">
 							<!-- 生活指数 -->
-							<div>体感温度:<span class="c-blue">{{lifestyle.fl}}摄氏度</span></div>
-							<div>温度:<span class="c-blue">{{lifestyle.tmp}}摄氏度</span></div>
-							<div>实况天气状况:<span class="c-blue">{{lifestyle.cond_txt}}</span></div>
-							<div>风向360角度:<span class="c-blue">{{lifestyle.wind_deg}}</span></div>
-							<div>风向:<span class="c-blue">{{lifestyle.wind_dir}}</span></div>
-							<div>风力:<span class="c-blue">{{lifestyle.wind_sc}}</span></div>
-							<div>风速:<span class="c-blue">{{lifestyle.wind_spd}}公里/小时</span></div>
-							<div>相对湿度:<span class="c-blue">{{lifestyle.hum}}</span></div>
-							<div>降水量:<span class="c-blue">{{lifestyle.pcpn}}</span></div>
-							<div>大气压强:<span class="c-blue">{{lifestyle.pres}}</span></div>
-							<div>能见度:<span class="c-blue">{{lifestyle.vis}}公里</span></div>
-							<div>云量:<span class="c-blue">{{lifestyle.cloud}}</span></div>
+							
+							<ul class="mui-table-view">
+								<li v-for="item in lifestyle" class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" href="#">
+										<span v-if="item.type=='comf'">舒适度指数</span>
+										<span v-if="item.type=='cw'">洗车指数</span>
+										<span v-if="item.type=='drsg'">穿衣指数</span>
+										<span v-if="item.type=='flu'">感冒指数</span>
+										<span v-if="item.type=='sport'">运动指数</span>
+										<span v-if="item.type=='trav'">旅游指数</span>
+										<span v-if="item.type=='uv'">紫外线指数</span>
+										<span v-if="item.type=='air'">空气污染扩散条件指数</span>
+										<span v-if="item.type=='ac'">空调开启指数</span>
+										<span v-if="item.type=='ag'">过敏指数</span>
+										<span v-if="item.type=='gl'">太阳镜指数</span>
+										<span v-if="item.type=='mu'">化妆指数</span>
+										<span v-if="item.type=='airc'">晾晒指数</span>
+										<span v-if="item.type=='ptfc'">交通指数</span>
+										<span v-if="item.type=='fsh'">钓鱼指数</span>
+										<span v-if="item.type=='spi'">防晒指数</span>
+										:<span class="c-blue">{{item.brf}}</span>
+									</a>
+									<div class="mui-collapse-content">
+										<p>{{item.txt}}</p>
+									</div>
+								</li>
+							</ul>
+							
+							
 						</div>
+						<div style="width: 100%;height: 44px;"></div>
 						
 					</div>
 				</div>
@@ -176,10 +183,6 @@
 				<a class="mui-tab-item" @click="getWeather_forecast">
 					<span class="mui-icon mui-icon-phone"></span>
 					<span class="mui-tab-label">3-10天预报</span>
-				</a>
-				<a class="mui-tab-item" @click="getWeather_hourly">
-					<span class="mui-icon mui-icon-email"></span>
-					<span class="mui-tab-label">逐小时预报</span>
 				</a>
 				<a class="mui-tab-item" @click="getWeather_lifestyle">
 					<span class="mui-icon mui-icon-gear"></span>

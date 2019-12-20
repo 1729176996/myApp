@@ -1,6 +1,7 @@
 var longitude = null;//经度
 var latitude = null;//纬度
 var altitude = null;//海拔
+var hftqKey = '7de1704af18f40b1b7060fe19dbcaca8';//和风天气api的key
 document.addEventListener('plusready', function(){
 	//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
 	
@@ -29,7 +30,8 @@ $(function(){
 	        var list = [
 				{name:'首页',url:'index.html'},
 				{name:'天气',url:'weather.html'},
-				{name:'随机',url:'random.html'}
+				{name:'随机',url:'random.html'},
+				{name:'地点',url:'location.html'}
 			];
 			this.list = list;
 			this.$nextTick(function(){
