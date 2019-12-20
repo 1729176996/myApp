@@ -62,10 +62,38 @@
 					<button @click="searchCity" type="button" class="mui-btn mui-btn-blue">搜索</button>
 				</div>
 				<div class="flex" style="position: relative;">
-					<div class="mui-scroll-wrapper">
+					<div class="mui-scroll-wrapper" id="locationwrapper">
 						<div class="mui-scroll">
 							<!--这里放置真实显示的DOM内容-->
-							444
+							<ul class="mui-table-view">
+								<li v-for="item in basic" class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" href="#">	地区／城市名称:<span class="c-blue">{{item.location}}</span></a>
+									<div class="mui-collapse-content">
+										<p>地区／城市ID:<span class="c-blue">{{item.cid}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>地区／城市经度:<span class="c-blue">{{item.lon}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>地区／城市纬度:<span class="c-blue">{{item.lat}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>该地区／城市的上级城市:<span class="c-blue">{{item.parent_city}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>该地区／城市所属行政区域:<span class="c-blue">{{item.admin_area}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>该地区／城市所属国家名称:<span class="c-blue">{{item.cnty}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>该地区／城市所在时区:<span class="c-blue">{{item.tz}}</span></p>
+									</div>
+									<div class="mui-collapse-content">
+										<p>该地区／城市的属性:<span class="c-blue">{{item.type=='city'?'城市':(item.type=='scenic'?'中国景点':'未知')}}</span></p>
+									</div>
+								</li>
+							</ul>
 						</div>
 					</div>
 					
